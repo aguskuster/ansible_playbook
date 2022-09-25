@@ -5,4 +5,4 @@
   tasks:
  
   - name: Joining worker nodes with kubernetes master
-    shell: tail -2 playbooks/join_token | xargs
+    shell: tail -2 ./join_token | xargs

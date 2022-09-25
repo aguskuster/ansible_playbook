@@ -1,5 +1,6 @@
 ---
 - hosts: kubernetes-master-nodes
+  become_user: root
   vars_files:
   - env_variables 
   tasks:

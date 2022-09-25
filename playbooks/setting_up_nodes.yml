@@ -22,10 +22,7 @@
         https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
 
   - name: Installing required packages
-    yum:
-     name: "{{ item }}"
-     state: present
-    with_items: "{{ packages }}"
+    shell: yum install -y kubeadm-1.18.5-0 kubelet-1.18.5-0 kubectl-1.18.5-0
   - name: Reloading Systemctl Demon
     shell: systemctl daemon-reload
   - name: Starting and Enabling the required services

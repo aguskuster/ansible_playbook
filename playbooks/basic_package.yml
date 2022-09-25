@@ -1,0 +1,36 @@
+---
+  - name: New VM
+    hosts: all
+    become: yes
+    become_user: root
+    gather_facts: No
+    tasks:
+      - name: Install a list of packages 
+        yum:
+          name: "{{ packages }}"
+        vars:
+          packages:
+          - vim
+          - net-tools
+          - wget
+          - telnet
+          - git
+
+      - name: Disable Selinux
+        ansible.posix.selinux:
+            policy: targeted
+            state: disabled
+     
+      - name: Disable Firewall  
+        service:
+          name: firewalld
+          state: stopped
+          enabled: no
+
+      - name: Update susctl setting for Kubernetes networking
+        shell: |
+         cat >>/etc/sysctl.d/kubernetes.conf<<EOF
+         net.bridge.bridge-nf-call-ip6tables = 1
+         net.bridge.bridge-nf-call-iptables = 1
+         EOF
+

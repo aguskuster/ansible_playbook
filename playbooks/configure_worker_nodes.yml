@@ -7,5 +7,8 @@
   - name: Copying token to worker nodes
     copy: src={{ token_file }} dest=join_token
  
+  - name: Creating sh with tokem
+    shell: tail -2 join_token > join.sh
+
   - name: Joining worker nodes with kubernetes master
-    shell: tail -2 join_token | xargs
+    shell: sh join.sh
